@@ -1,0 +1,12 @@
+/*This contains the styles for*/
+/*MainCatView, MainCatCreate & MainCatCard components*/
+.main-cat-upload-card {
+    width: 250px;
+    height: 200px;
+    border: #5b7b85 2px dashed;
+    border-radius: 10px;
+}
+
+.w-23-c {
+    width: 23%;
+}

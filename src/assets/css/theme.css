@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.h3 {
+    padding: 0;
+    margin: 0;
+}
+
+/*webkit styles*/
+::-webkit-scrollbar {
+    width: 7px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #fff2e4;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0bccba;
+    border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #08b6a9;
+}
+
+.text-medium {
+    font-size: 18px;
+}
+
+.text-large {
+    font-size: 20px;
+}
+
+.text-small {
+    font-size: 15px;
+}
+
+.text-extra-small {
+    font-size: 12px;
+}
+
+.bg-grey {
+    background-color: #e3e3e3;
+}
+
+.text-grey {
+    color: #95a5a6;
+}
+
+.full-round {
+    border-radius: 100%;
+}
+
+/*marging right*/
+.mr-1 {
+    margin-right: 10px;
+}
+
+.mr-2 {
+    margin-right: 20px;
+}
+
+.mr-3 {
+    margin-right: 30px;
+}
+
+.mr-4 {
+    margin-right: 40px;
+}
+
+.mr-5 {
+    margin-right: 50px;
+}
+
+.mr-6 {
+    margin-right: 60px;
+}
+
+.mr-7 {
+    margin-right: 70px;
+}
+
+.mr-8 {
+    margin-right: 80px;
+}
+
+/*margin-left*/
+.ml-1 {
+    margin-left: 10px;
+}
+
+.ml-2 {
+    margin-left: 20px;
+}
+
+.ml-3 {
+    margin-left: 30px;
+}
+
+.ml-4 {
+    margin-left: 40px;
+}
+
+.ml-5 {
+    margin-left: 50px;
+}
+
+.ml-6 {
+    margin-left: 60px;
+}
+
+.ml-7 {
+    margin-left: 70px;
+}
+
+.ml-8 {
+    margin-left: 80px;
+}
+
+/*border-radius*/
+.radius-5 {
+    border-radius: 5px;
+}
+
+.radius-8 {
+    border-radius: 8px;
+}
+
+.radius-10 {
+    border-radius: 10px;
+}
+
+.radius-12 {
+    border-radius: 12px;
+}
+
+.radius-15 {
+    border-radius: 15px;
+}
+
+.radius-20 {
+    border-radius: 20px;
+}
+
+.radius-25 {
+    border-radius: 25px;
+}
+
+.radius-35 {
+    border-radius: 35px;
+}
+
+.radius-50 {
+    border-radius: 50px;
+}
+
+.radius-100 {
+    border-radius: 100px;
+}
+
+/*sizes*/
+.width-24 {
+    width: 24%;
+    border-radius: 10px;
+}
+
+/*layouts*/
+.fullContainer {
+    width: 100%;
+    height: 100%;
+}
+
+.full-height-v {
+    height: 100vh;
+}
+
+.d-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*flex styles*/
+.flex-grow-2 {
+    flex-grow: 2;
+}
+
+.flex-grow-3 {
+    flex-grow: 3;
+}
+
+.flex-grow-4 {
+    flex-grow: 4;
+}
+
+.flex-grow-5 {
+    flex-grow: 5;
+}
+
+.flex-grow-6 {
+    flex-grow: 6;
+}
+
+.flex-grow-7 {
+    flex-grow: 7;
+}
+
+.flex-grow-8 {
+    flex-grow: 8;
+}
+
+.flex-grow-9 {
+    flex-grow: 9;
+}
+
+.flex-grow-10 {
+    flex-grow: 10;
+}
+
+/*utils*/
+.pointer {
+    cursor: pointer;
+}
+
+.grabbing {
+    cursor: grabbing;
+}
+
+/*components*/
+.custom-dropdown {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+}
+
+.custom-dropdown:focus {
+    outline: none;
+}
+
+/*images*/
+.object-fit {
+    object-fit: cover;
+}
+
+/*borders*/
+.right-border {
+    border-right: 1px black;
+}
+
+/*text*/
+.text-right {
+    text-align: right;
+}
+
+/*page dimensions*/
+.h-50-v {
+    height: 50vh;
+}
+
+.h-75-v {
+    height: 75vh;
+}
+
+.h-100-v {
+    height: 100vh;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.f-courgette {
+    font-family: 'Courgette', cursive;
+}
+
+.f-Londrina {
+    font-family: 'Londrina Solid', cursive;
+}
+
+.f-shippori {
+    font-family: 'Shippori Antique B1', sans-serif;
+}
+
+.f-lobster {
+    font-family: 'Lobster', cursive;
+}
+
+.f-indie-flower {
+    font-family: 'Indie Flower', cursive;
+}
+
+.f-Staatliches {
+    font-family: 'Staatliches', cursive;
+}
+
+.word-break {
+    word-break: break-word;
+}
+
+/*grad-colors*/
+.light-orange-grad {
+    background-attachment: fixed;
+    background-size: cover;
+    background-image: linear-gradient(to left top, #fcffb0, #ffe69d, #ffcc96, #ffb497, #ff9f9f);
+}
+
+@media all and (max-width: 540px) {
+    .width-24 {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .sm-mb-2 {
+        margin-bottom: 20px;
+    }
+}
