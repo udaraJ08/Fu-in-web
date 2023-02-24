@@ -10,6 +10,7 @@ export const EMPLOYEE_MOCK_DB = [
 
 export const FUEL_REQUESTS_DB = [
     {
+
         request_date: '2000.01.09',
         station: 'colombo',
         customer: 'Walakulu Gathsara',
