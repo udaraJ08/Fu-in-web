@@ -184,3 +184,51 @@ export const INCOME_CHART = [
         total: 900000
     }
 ]
+
+export const VEHICLES_DB = [
+    {
+        chassis_number: '12355',
+        register_number: 'BSG123',
+        type: {
+            vehicle_type: 'bike'
+        },
+         customer: {
+            name: 'Udara Janith'
+        }
+    },
+    {
+        chassis_number: '12355',
+        register_number: 'BSG123',
+        type: {
+            vehicle_type: 'van'
+        },
+         customer: {
+            name: 'Lochana Thiwanka'
+        }
+    },
+    {
+        chassis_number: '12355',
+        register_number: 'BSG123',
+        type: {
+            vehicle_type: 'three wheel'
+        },
+        customer: {
+            name: 'Gathsara Kumara'
+        }
+    }
+]
+
+export const VEHICLE_TYPE = [
+    {
+        type: "car/van",
+        quota: 20
+    },
+    {
+        type: "bike",
+        quota: 4
+    },
+    {
+        type: "three wheel",
+        quota: 10
+    }
+]
