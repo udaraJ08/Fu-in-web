@@ -20,27 +20,19 @@ export const stationTableHandler = () => {
             }
         },
         {
-            name: 'FUEL TYPE',
-            sortable: true,
-            minWidth: '250px',
-            selector: row => {
-                return row?.fuel_id?.fuel_type
-            }
-        },
-        {
-            name: 'FUEL PRICE',
+            name: 'PETROL AMOUNT',
             sortable: true,
             minWidth: '100px',
             selector: row => {
-                return row?.fuel_id?.price
+                return row?.petrol?.amount
             }
         },
         {
-            name: 'FUEL PRICE',
+            name: 'DIESEL AMOUNT',
             sortable: true,
             minWidth: '100px',
             selector: row => {
-                return row?.amount
+                return row?.diesel?.amount
             }
         }
     ]

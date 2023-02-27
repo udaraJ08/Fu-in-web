@@ -2,6 +2,7 @@ import {Card, CardBody, CardFooter, CardHeader, Col, Modal, ModalBody, ModalHead
 import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, XAxis, YAxis} from "recharts"
 import {Activity, AlertTriangle, Check} from "react-feather"
 import {useState} from "react"
+import IncomeReportChart from "../../custom-components/IncomerReportView/IncomeReportChart"
 
 const Dashboard = () => {
     const [goodOpen, setGoodOpen] = useState(false)
@@ -17,19 +18,19 @@ const Dashboard = () => {
                         <ResponsiveContainer>
                             <BarChart data={[
                                 {
-                                    name: "Track level",
-                                    good: 10,
-                                    warning:  30,
-                                    critical: 40
+                                    name: "Request Data",
+                                    accept: 10,
+                                    pending:  30,
+                                    cancel: 40
                                 }
                             ]}>
                                 <CartesianGrid strokeDasharray="3 3"/>
                                 <XAxis dataKey="name"/>
                                 <YAxis/>
                                 <Legend/>
-                                <Bar barSize={40} dataKey="good" fill="rgba(46, 213, 115, 0.6)"/>
-                                <Bar barSize={40} dataKey="warning" fill="rgba(255, 165, 2, 0.6)"/>
-                                <Bar barSize={40} dataKey="critical" fill="rgba(235, 77, 75, 0.6)"/>
+                                <Bar barSize={40} dataKey="accept" fill="rgba(46, 213, 115, 0.6)"/>
+                                <Bar barSize={40} dataKey="pending" fill="rgba(255, 165, 2, 0.6)"/>
+                                <Bar barSize={40} dataKey="cancel" fill="rgba(235, 77, 75, 0.6)"/>
                             </BarChart>
                         </ResponsiveContainer>
                     </CardBody>
@@ -41,7 +42,7 @@ const Dashboard = () => {
                 <Row>
                     <Col lg={4}>
                         <Card style={{height: '40vh'}}>
-                            <CardHeader className='text-medium font-bold'>LEVEL: GOOD</CardHeader>
+                            <CardHeader className='text-medium font-bold'>LEVEL: ACCEPTED</CardHeader>
                             <CardBody className='d-center flex-column'>
                                 <div>
                                     <Check size={100} color='rgba(46, 213, 115,1.0)'/>
@@ -58,7 +59,7 @@ const Dashboard = () => {
 
                     <Col lg={4}>
                         <Card style={{height: '40vh'}}>
-                            <CardHeader className='text-medium font-bold'>LEVEL: WARNING</CardHeader>
+                            <CardHeader className='text-medium font-bold'>LEVEL: PENDING</CardHeader>
                             <CardBody className='d-center flex-column'>
                                 <div>
                                     <AlertTriangle size={100} color='#fbc531'/>
@@ -75,7 +76,7 @@ const Dashboard = () => {
 
                     <Col lg={4}>
                         <Card style={{height: '40vh'}}>
-                            <CardHeader className='text-medium font-bold'>LEVEL: CRITICAL</CardHeader>
+                            <CardHeader className='text-medium font-bold'>LEVEL: CANCELLED</CardHeader>
                             <CardBody className='d-center flex-column'>
                                 <div>
                                     <Activity size={100} color='#eb4d4b'/>
@@ -105,7 +106,7 @@ const Dashboard = () => {
             <Col lg={3}>
                 <Card className='btn btn-gradient-success'>
                     <CardBody className='d-center align-items-baseline'>
-                        <p className='text-medium m-0 p-0'>Success Stock Report</p>
+                        <p className='text-medium m-0 p-0'>Completed Request Report</p>
                     </CardBody>
                 </Card>
             </Col>
@@ -113,7 +114,7 @@ const Dashboard = () => {
             <Col lg={3}>
                 <Card className='btn btn-gradient-warning'>
                     <CardBody className='d-center align-items-baseline'>
-                        <p className='text-medium m-0 p-0'>Warning Stock Report</p>
+                        <p className='text-medium m-0 p-0'>Pending Request Report</p>
                     </CardBody>
                 </Card>
             </Col>
@@ -121,7 +122,7 @@ const Dashboard = () => {
             <Col lg={3}>
                 <Card className='btn btn-gradient-danger'>
                     <CardBody className='d-center align-items-baseline'>
-                        <p className='text-medium m-0 p-0'>Danger Stock Report</p>
+                        <p className='text-medium m-0 p-0'>Cancelled Request Report</p>
                     </CardBody>
                 </Card>
             </Col>
@@ -148,7 +149,7 @@ const Dashboard = () => {
                 </Card>
 
                 <Card style={{height: '25vh'}}>
-                    <CardHeader className='text-medium font-bold'>Total sales this month</CardHeader>
+                    <CardHeader className='text-medium font-bold'>Total pumps this month</CardHeader>
                     <CardBody className='d-center flex-column'>
                         {/*<div className='mb-1'>*/}
                         {/*    <Target size={25} color='#7468f0'/>*/}
@@ -178,7 +179,7 @@ const Dashboard = () => {
 
             </Col>
             <Col lg={9}>
-                {/*<IncomeReportChart/>*/}
+                <IncomeReportChart/>
             </Col>
         </Row>
 

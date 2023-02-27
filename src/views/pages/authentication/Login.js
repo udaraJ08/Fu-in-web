@@ -104,28 +104,21 @@ const Login = () => {
         }
     }
 
-    const signup = () => {
-
-    }
-
     return (
         <div className='auth-wrapper auth-cover login-back'>
             <div className='auth-inner m-0 d-flex overflow-hidden'>
                 <Col lg={8} className="d-center flex-column">
                     <img src={logo} width="20%" className="animate__animated animate__bounce"/>
-                    <h1 className="text-center mt-2 f-Londrina font-large-2">Together we make <span
-                        className="text-primary">Future</span></h1>
-                    <p className="f-courgette text-medium">Creativity awaits...</p>
+                    <h1 className="text-center mt-2 f-Staatliches font-large-2">Ride Higher with us </h1>
                 </Col>
                 <Card className="flex-grow-1 d-center h-100">
                     <Col
                         className='d-flex align-items-center bg-transparent login-inner radius-20 auth-bg px-2 p-5'
                         lg={11}>
                         <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
-                            <CardTitle tag='h2' className='fw-bold mb-1 text-center text-dark f-Londrina'>
-                                <h1>WELCOME TO THE VUEXY STARTER KIT</h1>
+                            <CardTitle tag='h2' className='fw-bold mb-1 text-center text-dark f-Staatliches'>
+                                <h1>WELCOME TO FUEL IN</h1>
                             </CardTitle>
-                            <CardText className='mb-2 text-center f-courgette'><h4>Creativity awaits...</h4></CardText>
                             <Form className='auth-login-form mt-2' onSubmit={handleSubmit(onSubmit)}>
                                 <div className='mb-1 mt-5'>
                                     <Label className='f-shippori' for='login-email'>
@@ -162,19 +155,12 @@ const Login = () => {
                                         )}
                                     />
                                 </div>
-                                <div className="text-right f-Londrina mt-2 mb-1">
+                                <div className="text-right f-Staatliches mt-2 mb-1">
                                     <h5 className="text-primary">forgot password ?</h5>
                                 </div>
                                 <Button type='submit' color='primary' block className="p-1 mt-2 mb-3">
                                     Sign in
                                 </Button>
-                                <div className="text-center mt-2 mb-1 f-Londrina">
-                                    <h4>New to the starter kit ?
-                                        <span
-                                            onClick={signup}
-                                            className="text-primary p-0 pointer"> signup here.</span>
-                                    </h4>
-                                </div>
                             </Form>
                         </Col>
                     </Col>

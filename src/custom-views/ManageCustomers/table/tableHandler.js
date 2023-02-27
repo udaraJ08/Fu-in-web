@@ -46,17 +46,9 @@ export const customerTableHandler = () => {
         {
             name: 'ADDRESS',
             sortable: true,
-            minWidth: '100px',
+            minWidth: '300px',
             selector: row => {
                 return row.address
-            }
-        },
-        {
-            name: 'ROLE',
-            sortable: true,
-            minWidth: '100px',
-            selector: row => {
-                return row?.role
             }
         }
     ]

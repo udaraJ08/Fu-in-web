@@ -7,7 +7,7 @@ import {
     Row
 } from 'reactstrap'
 import {customerTableHandler} from "./tableHandler"
-import {EMPLOYEE_MOCK_DB} from "../../../DB/DB"
+import {CUSTOMER_MOCK_DB} from "../../../DB/DB"
 
 const BootstrapCheckbox = forwardRef((props, ref) => (
     <div className='form-check'>
@@ -49,7 +49,7 @@ const CustomerManagementTable = () => {
             nextLabel=''
             forcePage={currentPage}
             onPageChange={page => handlePagination(page)}
-            pageCount={searchValue.length ? Math.ceil(EMPLOYEE_MOCK_DB.length / 10) : Math.ceil(EMPLOYEE_MOCK_DB.length / 10) || 1}
+            pageCount={searchValue.length ? Math.ceil(CUSTOMER_MOCK_DB.length / 10) : Math.ceil(CUSTOMER_MOCK_DB.length / 10) || 1}
             breakLabel='...'
             pageRangeDisplayed={2}
             marginPagesDisplayed={2}
@@ -80,7 +80,7 @@ const CustomerManagementTable = () => {
                         sortIcon={<ChevronDown size={10}/>}
                         paginationDefaultPage={currentPage + 1}
                         paginationComponent={CustomPagination}
-                        data={EMPLOYEE_MOCK_DB}
+                        data={CUSTOMER_MOCK_DB}
                         onSelectedRowsChange={onChangeHandle}
                     />
                 </div>

@@ -3,8 +3,8 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'talentZea',
-    appLogoImage: require('@src/assets/images/logo/logo.svg').default
+    appName: 'Fuel In',
+    appLogoImage: require('../assets/custom_images/logo.png').default
   },
   layout: {
     isRTL: false,
