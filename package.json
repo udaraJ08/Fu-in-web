@@ -100,12 +100,14 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js src/**/*.jsx",
-    "lint:fix": "eslint src/**/*.js --fix"
+    "lint:fix": "eslint src/**/*.js --fix",
+    "local-test-v-desktop": "playwright codegen --viewport-size=1366,768 localhost:3000"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "devDependencies": {
+    "@playwright/test": "^1.31.1",
     "@types/sortablejs": "^1.10.6",
     "aws-amplify": "^4.3.18",
     "eslint": "^7.11.0",
