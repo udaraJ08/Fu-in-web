@@ -1,7 +1,23 @@
 import EmployeeManagementTable from "./table/EmployeeManagementTable"
 import {Card, Col, Form, Input, Label, Row} from "reactstrap"
+import {useEffect, useState} from "react"
+import axios from "../../axios/axios"
+import {dropdownPopulate} from "../../utility/customUtils"
 
 const ManageEmployeeView = () => {
+
+    const [employees, setEmployees] = useState([])
+
+    const fetchEmployees = async () => {
+
+        await axios.get("/employee").then(res => {
+            setEmployees(dropdownPopulate(res.data, "name", "id"))
+        })
+    }
+
+    useEffect(() => {
+        fetchEmployees()
+    }, [])
 
     return <div>
         <h1 className='mb-3'>Manage Employee</h1>
@@ -50,7 +66,7 @@ const ManageEmployeeView = () => {
             </Form>
         </Card>
 
-        <EmployeeManagementTable />
+        <EmployeeManagementTable data={employees}/>
     </div>
 }
 

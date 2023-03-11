@@ -1,4 +1,4 @@
-import {Fragment, useState} from 'react'
+import {Fragment, useEffect, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -7,6 +7,7 @@ import {
 } from 'reactstrap'
 import {deliveryTableHandler} from "./tableHandler"
 import {DELIVERY_DB} from "../../../DB/DB"
+import axios from "../../../axios/axios"
 
 const onChangeHandle = (userdata) => {
     console.log(userdata)
@@ -16,11 +17,23 @@ const DeliveryManagementTable = () => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
+    const [delivery, setDelivery] = useState([])
 
     // ** Function to handle Pagination
     const handlePagination = page => {
         setCurrentPage(page.selected)
     }
+
+    const fetchDelivery = async () => {
+
+        return axios.get("/deliveries").then(res => {
+            setDelivery(res.data)
+        })
+    }
+
+    useEffect(() => {
+        fetchDelivery()
+    }, [])
 
     // ** Custom Pagination
     const CustomPagination = () => (
@@ -29,7 +42,7 @@ const DeliveryManagementTable = () => {
             nextLabel=''
             forcePage={currentPage}
             onPageChange={page => handlePagination(page)}
-            pageCount={searchValue.length ? Math.ceil(DELIVERY_DB.length / 10) : Math.ceil(DELIVERY_DB.length / 10) || 1}
+            pageCount={searchValue.length ? Math.ceil(delivery.length / 10) : Math.ceil(delivery.length / 10) || 1}
             breakLabel='...'
             pageRangeDisplayed={2}
             marginPagesDisplayed={2}
@@ -60,7 +73,7 @@ const DeliveryManagementTable = () => {
                         sortIcon={<ChevronDown size={10}/>}
                         paginationDefaultPage={currentPage + 1}
                         paginationComponent={CustomPagination}
-                        data={DELIVERY_DB}
+                        data={delivery}
                         onSelectedRowsChange={onChangeHandle}
                     />
                 </div>

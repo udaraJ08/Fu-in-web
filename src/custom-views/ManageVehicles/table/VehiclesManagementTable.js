@@ -1,4 +1,4 @@
-import {forwardRef, Fragment, useState} from 'react'
+import {forwardRef, Fragment, useEffect, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -7,7 +7,7 @@ import {
     Row
 } from 'reactstrap'
 import {vehiclesTableHandler} from "./tableHandler"
-import {CUSTOMER_MOCK_DB, VEHICLES_DB} from "../../../DB/DB"
+import axios from "../../../axios/axios"
 
 const BootstrapCheckbox = forwardRef((props, ref) => (
     <div className='form-check'>
@@ -23,24 +23,23 @@ const VehiclesManagementTable = () => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
-    // const [filteredData] = useState([])
-    // const employees = useSelector(selectEmployees)
+    const [vehicles, setVehicles] = useState([])
 
     // ** Function to handle Pagination
     const handlePagination = page => {
         setCurrentPage(page.selected)
     }
 
-    // useEffect(() => {
-    //     if (employees) {
-    //         const temp = employees.map(item => {
-    //             if (item.status === 'active') {
-    //                 return item
-    //             }
-    //         })
-    //         setFilteredEmployees(temp)
-    //     }
-    // }, [employees])
+    const fetchVehicles = async () => {
+
+        await axios.get("/vehicle").then(res => {
+            setVehicles(res.data)
+        })
+    }
+
+    useEffect(() => {
+        fetchVehicles()
+    }, [])
 
     // ** Custom Pagination
     const CustomPagination = () => (
@@ -49,7 +48,7 @@ const VehiclesManagementTable = () => {
             nextLabel=''
             forcePage={currentPage}
             onPageChange={page => handlePagination(page)}
-            pageCount={searchValue.length ? Math.ceil(VEHICLES_DB.length / 10) : Math.ceil(VEHICLES_DB.length / 10) || 1}
+            pageCount={searchValue.length ? Math.ceil(vehicles.length / 10) : Math.ceil(vehicles.length / 10) || 1}
             breakLabel='...'
             pageRangeDisplayed={2}
             marginPagesDisplayed={2}
@@ -80,7 +79,7 @@ const VehiclesManagementTable = () => {
                         sortIcon={<ChevronDown size={10}/>}
                         paginationDefaultPage={currentPage + 1}
                         paginationComponent={CustomPagination}
-                        data={VEHICLES_DB}
+                        data={vehicles}
                         onSelectedRowsChange={onChangeHandle}
                     />
                 </div>

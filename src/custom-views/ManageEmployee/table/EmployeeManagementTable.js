@@ -19,7 +19,7 @@ const onChangeHandle = (userdata) => {
     console.log(userdata)
 }
 
-const EmployeeManagementTable = () => {
+const EmployeeManagementTable = ({data}) => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
@@ -49,7 +49,7 @@ const EmployeeManagementTable = () => {
             nextLabel=''
             forcePage={currentPage}
             onPageChange={page => handlePagination(page)}
-            pageCount={searchValue.length ? Math.ceil(EMPLOYEE_MOCK_DB.length / 10) : Math.ceil(EMPLOYEE_MOCK_DB.length / 10) || 1}
+            pageCount={searchValue.length ? Math.ceil(data.length / 10) : Math.ceil(data.length / 10) || 1}
             breakLabel='...'
             pageRangeDisplayed={2}
             marginPagesDisplayed={2}
@@ -80,7 +80,7 @@ const EmployeeManagementTable = () => {
                         sortIcon={<ChevronDown size={10}/>}
                         paginationDefaultPage={currentPage + 1}
                         paginationComponent={CustomPagination}
-                        data={EMPLOYEE_MOCK_DB}
+                        data={data}
                         onSelectedRowsChange={onChangeHandle}
                     />
                 </div>

@@ -24,7 +24,7 @@ export const vehiclesTableHandler = () => {
             sortable: true,
             minWidth: '250px',
             selector: row => {
-                return row?.type?.vehicle_type
+                return row?.vehicleType?.type
             }
         },
         {

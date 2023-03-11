@@ -64,3 +64,13 @@ export const deleteAttrFromObject = (obj, attr) => {
 export const checkBool = (dis) => {
     return dis === "true"
 }
+
+//Use this to populate the react dropdown
+export const dropdownPopulate = (data, name, value) => {
+    return data?.map((e) => {
+        return {
+            label: e[name.toString()],
+            value: e[value.toString()]
+        }
+    })
+}

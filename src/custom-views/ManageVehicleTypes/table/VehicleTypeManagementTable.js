@@ -12,7 +12,7 @@ const onChangeHandle = (userdata) => {
     console.log(userdata)
 }
 
-const VehicleTypeManagementTable = () => {
+const VehicleTypeManagementTable = ({data}) => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
@@ -29,7 +29,7 @@ const VehicleTypeManagementTable = () => {
             nextLabel=''
             forcePage={currentPage}
             onPageChange={page => handlePagination(page)}
-            pageCount={searchValue.length ? Math.ceil(VEHICLE_TYPE.length / 10) : Math.ceil(VEHICLE_TYPE.length / 10) || 1}
+            pageCount={searchValue.length ? Math.ceil(data.length / 10) : Math.ceil(data.length / 10) || 1}
             breakLabel='...'
             pageRangeDisplayed={2}
             marginPagesDisplayed={2}
@@ -60,7 +60,7 @@ const VehicleTypeManagementTable = () => {
                         sortIcon={<ChevronDown size={10}/>}
                         paginationDefaultPage={currentPage + 1}
                         paginationComponent={CustomPagination}
-                        data={VEHICLE_TYPE}
+                        data={data}
                         onSelectedRowsChange={onChangeHandle}
                     />
                 </div>

@@ -1,8 +1,35 @@
 import {Card, Col, Input, Label, Row} from "reactstrap"
 import DeliveryManagementTable from "./table/DeliveryManagementTable"
 import Select from "react-select"
+import {useEffect, useState} from "react"
+import axios from "../../axios/axios"
+import {dropdownPopulate} from "../../utility/customUtils"
 
 const DeliveryView = () => {
+
+    const [stations, setStations] = useState([])
+
+    const option = [
+        {
+            label: 'petrol',
+            value: 'petrol'
+        },
+        {
+            label: "diesel",
+            value: "diesel"
+        }
+    ]
+
+    const fetchStations = async () => {
+
+        await axios.get("/station").then(res => {
+            setStations(dropdownPopulate(res.data, "name", "id"))
+        })
+    }
+
+    useEffect(() => {
+        fetchStations()
+    }, [])
 
     return <div>
         <h1 className='mb-3'>Manage Delivery</h1>
@@ -10,12 +37,12 @@ const DeliveryView = () => {
             <Row>
                 <Col lg={3}>
                     <Label className='text-small'>Station</Label>
-                    <Select />
+                    <Select options={stations}/>
                 </Col>
 
                 <Col lg={3}>
                     <Label className='text-small'>Fuel Type</Label>
-                    <Select />
+                    <Select options={option}/>
                 </Col>
 
                 <Col lg={3}>
