@@ -1,4 +1,4 @@
-import {forwardRef, Fragment, useState} from 'react'
+import {forwardRef, Fragment, useEffect, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -8,6 +8,8 @@ import {
 } from 'reactstrap'
 import {fuelRequestsTableHandler} from "./tableHandler"
 import {EMPLOYEE_MOCK_DB, FUEL_REQUESTS_DB} from "../../../DB/DB"
+import axios from "../../../axios/axios"
+import moment from "moment"
 
 const BootstrapCheckbox = forwardRef((props, ref) => (
     <div className='form-check'>
@@ -24,15 +26,30 @@ const FuelRequestsTable = () => {
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
     const [goodOpen, setGoodOpen] = useState(false)
+    const [requests, setRequests] = useState([])
+    // eslint-disable-next-line no-unused-vars
+    const [selectedRequest, setSelectedRequest] = useState()
 
     // ** Function to handle Pagination
     const handlePagination = page => {
         setCurrentPage(page.selected)
     }
 
-    const onRowClicked = () => {
+    const onRowClicked = (e) => {
         setGoodOpen(!goodOpen)
+        setSelectedRequest(e)
     }
+
+    const fetchRequests = async () => {
+
+        return axios.get("/fuel-request").then(res => {
+            setRequests(res.data)
+        })
+    }
+
+    useEffect(() => {
+        fetchRequests()
+    }, [])
 
     // ** Custom Pagination
     const CustomPagination = () => (
@@ -41,7 +58,7 @@ const FuelRequestsTable = () => {
             nextLabel=''
             forcePage={currentPage}
             onPageChange={page => handlePagination(page)}
-            pageCount={searchValue.length ? Math.ceil(FUEL_REQUESTS_DB.length / 10) : Math.ceil(FUEL_REQUESTS_DB.length / 10) || 1}
+            pageCount={searchValue.length ? Math.ceil(requests.length / 10) : Math.ceil(requests.length / 10) || 1}
             breakLabel='...'
             pageRangeDisplayed={2}
             marginPagesDisplayed={2}
@@ -72,7 +89,7 @@ const FuelRequestsTable = () => {
                         sortIcon={<ChevronDown size={10}/>}
                         paginationDefaultPage={currentPage + 1}
                         paginationComponent={CustomPagination}
-                        data={FUEL_REQUESTS_DB}
+                        data={requests}
                         onSelectedRowsChange={onChangeHandle}
                         onRowClicked={onRowClicked}
                     />
@@ -95,7 +112,7 @@ const FuelRequestsTable = () => {
                         <h4>Fuel Type: Petrol</h4>
                     </div>
                     <div className='mt-1'>
-                        <h4>Request Date: 2023-03-01</h4>
+                        <h4>Request Date: {moment(selectedRequest?.request_date_time).format("YYYY/MM/DD")}</h4>
                     </div>
 
                     <div className='d-flex justify-content-between mt-3'>

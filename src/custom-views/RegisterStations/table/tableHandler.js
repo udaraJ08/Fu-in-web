@@ -8,7 +8,7 @@ export const stationTableHandler = () => {
             sortable: true,
             minWidth: '100px',
             selector: row => {
-                return row?.station_id?.name
+                return row?.name
             }
         },
         {
@@ -16,7 +16,7 @@ export const stationTableHandler = () => {
             sortable: true,
             minWidth: '100px',
             selector: row => {
-                return row?.station_id?.location
+                return row?.location
             }
         },
         {

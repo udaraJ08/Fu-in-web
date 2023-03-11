@@ -1,4 +1,4 @@
-import {forwardRef, Fragment, useState} from 'react'
+import {forwardRef, Fragment, useEffect, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -8,6 +8,7 @@ import {
 } from 'reactstrap'
 import {customerTableHandler} from "./tableHandler"
 import {CUSTOMER_MOCK_DB} from "../../../DB/DB"
+import axios from "../../../axios/axios"
 
 const BootstrapCheckbox = forwardRef((props, ref) => (
     <div className='form-check'>
@@ -19,28 +20,33 @@ const onChangeHandle = (userdata) => {
     console.log(userdata)
 }
 
+// NETWORK CALLINGS
+// const fetchCustomerData = async () => {
+//
+//
+//     await ax
+// }
 const CustomerManagementTable = () => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
-    // const [filteredData] = useState([])
-    // const employees = useSelector(selectEmployees)
+    const [customers, setCustomers] = useState([])
 
     // ** Function to handle Pagination
     const handlePagination = page => {
         setCurrentPage(page.selected)
     }
 
-    // useEffect(() => {
-    //     if (employees) {
-    //         const temp = employees.map(item => {
-    //             if (item.status === 'active') {
-    //                 return item
-    //             }
-    //         })
-    //         setFilteredEmployees(temp)
-    //     }
-    // }, [employees])
+    const fetchCustomers = async () => {
+
+        return axios.get("/customer").then(res => {
+            setCustomers(res.data)
+        })
+    }
+
+    useEffect(() => {
+        fetchCustomers()
+    }, [])
 
     // ** Custom Pagination
     const CustomPagination = () => (
@@ -49,7 +55,7 @@ const CustomerManagementTable = () => {
             nextLabel=''
             forcePage={currentPage}
             onPageChange={page => handlePagination(page)}
-            pageCount={searchValue.length ? Math.ceil(CUSTOMER_MOCK_DB.length / 10) : Math.ceil(CUSTOMER_MOCK_DB.length / 10) || 1}
+            pageCount={searchValue.length ? Math.ceil(customers.length / 10) : Math.ceil(customers.length / 10) || 1}
             breakLabel='...'
             pageRangeDisplayed={2}
             marginPagesDisplayed={2}
@@ -80,7 +86,7 @@ const CustomerManagementTable = () => {
                         sortIcon={<ChevronDown size={10}/>}
                         paginationDefaultPage={currentPage + 1}
                         paginationComponent={CustomPagination}
-                        data={CUSTOMER_MOCK_DB}
+                        data={customers}
                         onSelectedRowsChange={onChangeHandle}
                     />
                 </div>

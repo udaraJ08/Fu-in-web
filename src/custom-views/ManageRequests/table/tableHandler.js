@@ -1,3 +1,5 @@
+import moment from "moment"
+
 export const fuelRequestsTableHandler = () => {
 
     return  [
@@ -6,7 +8,7 @@ export const fuelRequestsTableHandler = () => {
             sortable: true,
             minWidth: '100px',
             selector: row => {
-                return row?.station
+                return row?.station?.name
             }
         },
         {
@@ -14,7 +16,7 @@ export const fuelRequestsTableHandler = () => {
             sortable: true,
             minWidth: '100px',
             selector: row => {
-                return row.request_date
+                return moment(row.request_date_time).format('DD/mm/YYYY')
             }
         },
         {

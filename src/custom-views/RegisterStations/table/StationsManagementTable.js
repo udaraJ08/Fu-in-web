@@ -1,4 +1,4 @@
-import {forwardRef, Fragment, useState} from 'react'
+import {forwardRef, Fragment, useEffect, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -7,7 +7,7 @@ import {
     Row
 } from 'reactstrap'
 import {stationTableHandler} from "./tableHandler"
-import {EMPLOYEE_MOCK_DB, STATION_DB} from "../../../DB/DB"
+import axios from "../../../axios/axios"
 
 const BootstrapCheckbox = forwardRef((props, ref) => (
     <div className='form-check'>
@@ -25,7 +25,7 @@ const StationsManagementTable = () => {
     const [searchValue] = useState('')
     // const [filteredData] = useState([])
     const [goodOpen, setGoodOpen] = useState(false)
-    // const employees = useSelector(selectEmployees)
+    const [stations, setStations] = useState([])
 
     // ** Function to handle Pagination
     const handlePagination = page => {
@@ -36,16 +36,16 @@ const StationsManagementTable = () => {
         setGoodOpen(!goodOpen)
     }
 
-    // useEffect(() => {
-    //     if (employees) {
-    //         const temp = employees.map(item => {
-    //             if (item.status === 'active') {
-    //                 return item
-    //             }
-    //         })
-    //         setFilteredEmployees(temp)
-    //     }
-    // }, [employees])
+    const fetchStations = async () => {
+
+        return axios.get("/station").then(res => {
+            setStations(res.data)
+        })
+    }
+
+    useEffect(() => {
+        fetchStations()
+    }, [])
 
     // ** Custom Pagination
     const CustomPagination = () => (
@@ -54,7 +54,7 @@ const StationsManagementTable = () => {
             nextLabel=''
             forcePage={currentPage}
             onPageChange={page => handlePagination(page)}
-            pageCount={searchValue.length ? Math.ceil(STATION_DB.length / 10) : Math.ceil(STATION_DB.length / 10) || 1}
+            pageCount={searchValue.length ? Math.ceil(stations.length / 10) : Math.ceil(stations.length / 10) || 1}
             breakLabel='...'
             pageRangeDisplayed={2}
             marginPagesDisplayed={2}
@@ -85,7 +85,7 @@ const StationsManagementTable = () => {
                         sortIcon={<ChevronDown size={10}/>}
                         paginationDefaultPage={currentPage + 1}
                         paginationComponent={CustomPagination}
-                        data={STATION_DB}
+                        data={stations}
                         onSelectedRowsChange={onChangeHandle}
                         onRowClicked={onRowClicked}
                     />
