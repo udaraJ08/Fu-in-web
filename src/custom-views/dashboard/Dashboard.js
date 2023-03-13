@@ -44,18 +44,18 @@ const Dashboard = () => {
                             <BarChart data={[
                                 {
                                     name: "Request Data",
-                                    accept: 10,
-                                    pending:  30,
-                                    cancel: 40
+                                    request: categorizeDeliveries(REQUEST).length,
+                                    pending:  categorizeDeliveries(PENDING).length,
+                                    done: categorizeDeliveries(DONE).length
                                 }
                             ]}>
                                 <CartesianGrid strokeDasharray="3 3"/>
                                 <XAxis dataKey="name"/>
                                 <YAxis/>
                                 <Legend/>
-                                <Bar barSize={40} dataKey="accept" fill="rgba(46, 213, 115, 0.6)"/>
+                                <Bar barSize={40} dataKey="request" fill="rgba(46, 213, 115, 0.6)"/>
                                 <Bar barSize={40} dataKey="pending" fill="rgba(255, 165, 2, 0.6)"/>
-                                <Bar barSize={40} dataKey="cancel" fill="rgba(235, 77, 75, 0.6)"/>
+                                <Bar barSize={40} dataKey="done" fill="rgba(235, 77, 75, 0.6)"/>
                             </BarChart>
                         </ResponsiveContainer>
                     </CardBody>
@@ -67,13 +67,13 @@ const Dashboard = () => {
                 <Row>
                     <Col lg={4}>
                         <Card style={{height: '40vh'}}>
-                            <CardHeader className='text-medium font-bold'>LEVEL: ACCEPTED</CardHeader>
+                            <CardHeader className='text-medium font-bold'>LEVEL: REQUESTED</CardHeader>
                             <CardBody className='d-center flex-column'>
                                 <div>
                                     <Check size={100} color='rgba(46, 213, 115,1.0)'/>
                                 </div>
                                 <div>
-                                    <b className='text-large text-success'>{10} ITEM(S)</b>
+                                    <b className='text-large text-success'>{categorizeDeliveries(REQUEST).length} ITEM(S)</b>
                                 </div>
                             </CardBody>
                             <CardFooter onClick={() => setGoodOpen(!goodOpen)} className='d-center'>
@@ -90,7 +90,7 @@ const Dashboard = () => {
                                     <AlertTriangle size={100} color='#fbc531'/>
                                 </div>
                                 <div>
-                                    <b className='text-large text-warning'>{10} ITEM(S)</b>
+                                    <b className='text-large text-warning'>{categorizeDeliveries(PENDING).length} ITEM(S)</b>
                                 </div>
                             </CardBody>
                             <CardFooter onClick={() => setWarningOpen(!warningOpen)} className='d-center'>
@@ -101,13 +101,13 @@ const Dashboard = () => {
 
                     <Col lg={4}>
                         <Card style={{height: '40vh'}}>
-                            <CardHeader className='text-medium font-bold'>LEVEL: CANCELLED</CardHeader>
+                            <CardHeader className='text-medium font-bold'>LEVEL: DONE</CardHeader>
                             <CardBody className='d-center flex-column'>
                                 <div>
                                     <Activity size={100} color='#eb4d4b'/>
                                 </div>
                                 <div>
-                                    <b className='text-large text-danger'>{10} ITEM(S)</b>
+                                    <b className='text-large text-danger'>{categorizeDeliveries(DONE).length} ITEM(S)</b>
                                 </div>
                             </CardBody>
                             <CardFooter onClick={() => setCriticalOpen(!criticalOpen)} className='d-center'>
@@ -124,7 +124,7 @@ const Dashboard = () => {
                     className='btn'>
                     <CardBody className='d-center align-items-baseline'>
                         <p className='text-medium m-0 p-0'>This month items:</p>
-                        <h4 className='ml-2 mb-0 p-0 font-bold'>{20}</h4>
+                        <h4 className='ml-2 mb-0 p-0 font-bold'>{request.length}</h4>
                     </CardBody>
                 </Card>
             </Col>
