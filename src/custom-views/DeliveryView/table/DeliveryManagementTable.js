@@ -1,4 +1,4 @@
-import {Fragment, useEffect, useState} from 'react'
+import {Fragment, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -6,34 +6,20 @@ import {
     Card, Input, Row
 } from 'reactstrap'
 import {deliveryTableHandler} from "./tableHandler"
-import {DELIVERY_DB} from "../../../DB/DB"
-import axios from "../../../axios/axios"
 
 const onChangeHandle = (userdata) => {
     console.log(userdata)
 }
 
-const DeliveryManagementTable = () => {
+const DeliveryManagementTable = ({delivery}) => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
-    const [delivery, setDelivery] = useState([])
 
     // ** Function to handle Pagination
     const handlePagination = page => {
         setCurrentPage(page.selected)
     }
-
-    const fetchDelivery = async () => {
-
-        return axios.get("/deliveries").then(res => {
-            setDelivery(res.data)
-        })
-    }
-
-    useEffect(() => {
-        fetchDelivery()
-    }, [])
 
     // ** Custom Pagination
     const CustomPagination = () => (

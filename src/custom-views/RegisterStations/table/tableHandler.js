@@ -18,22 +18,22 @@ export const stationTableHandler = () => {
             selector: row => {
                 return row?.location
             }
-        },
-        {
-            name: 'PETROL AMOUNT',
-            sortable: true,
-            minWidth: '100px',
-            selector: row => {
-                return row?.petrol?.amount
-            }
-        },
-        {
-            name: 'DIESEL AMOUNT',
-            sortable: true,
-            minWidth: '100px',
-            selector: row => {
-                return row?.diesel?.amount
-            }
         }
+        // {
+        //     name: 'PETROL AMOUNT',
+        //     sortable: true,
+        //     minWidth: '100px',
+        //     selector: row => {
+        //         return row?.petrol?.amount
+        //     }
+        // },
+        // {
+        //     name: 'DIESEL AMOUNT',
+        //     sortable: true,
+        //     minWidth: '100px',
+        //     selector: row => {
+        //         return row?.diesel?.amount
+        //     }
+        // }
     ]
 }

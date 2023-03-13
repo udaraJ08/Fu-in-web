@@ -1,4 +1,4 @@
-import {forwardRef, Fragment, useEffect, useState} from 'react'
+import {forwardRef, Fragment, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -7,7 +7,6 @@ import {
     Row
 } from 'reactstrap'
 import {stationTableHandler} from "./tableHandler"
-import axios from "../../../axios/axios"
 
 const BootstrapCheckbox = forwardRef((props, ref) => (
     <div className='form-check'>
@@ -19,13 +18,12 @@ const onChangeHandle = (userdata) => {
     console.log(userdata)
 }
 
-const StationsManagementTable = () => {
+const StationsManagementTable = ({stations}) => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
     // const [filteredData] = useState([])
     const [goodOpen, setGoodOpen] = useState(false)
-    const [stations, setStations] = useState([])
 
     // ** Function to handle Pagination
     const handlePagination = page => {
@@ -35,17 +33,6 @@ const StationsManagementTable = () => {
     const onRowClicked = () => {
         setGoodOpen(!goodOpen)
     }
-
-    const fetchStations = async () => {
-
-        return axios.get("/station").then(res => {
-            setStations(res.data)
-        })
-    }
-
-    useEffect(() => {
-        fetchStations()
-    }, [])
 
     // ** Custom Pagination
     const CustomPagination = () => (

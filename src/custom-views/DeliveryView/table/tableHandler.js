@@ -1,4 +1,4 @@
-import { Edit, Trash2 } from "react-feather"
+import moment from "moment"
 
 export const deliveryTableHandler = () => {
 
@@ -8,7 +8,7 @@ export const deliveryTableHandler = () => {
             sortable: true,
             minWidth: '250px',
             selector: row => {
-                return row?.date
+                return moment(row?.date).format("DD-mm-yyyy")
             }
         },
         {
@@ -16,7 +16,7 @@ export const deliveryTableHandler = () => {
             sortable: true,
             minWidth: '100px',
             selector: row => {
-                return row?.station
+                return row?.station?.name
             }
         },
         {
@@ -32,7 +32,7 @@ export const deliveryTableHandler = () => {
             sortable: true,
             minWidth: '250px',
             selector: row => {
-                return row?.amount
+                return row?.quantity_of_liters
             }
         }
     ]
