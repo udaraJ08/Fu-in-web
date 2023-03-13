@@ -1,13 +1,38 @@
 import {Card, CardBody, CardFooter, CardHeader, Col, Modal, ModalBody, ModalHeader, Row} from "reactstrap"
 import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, XAxis, YAxis} from "recharts"
 import {Activity, AlertTriangle, Check} from "react-feather"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import IncomeReportChart from "../../custom-components/IncomerReportView/IncomeReportChart"
+import axios from "../../axios/axios"
+import FuelRequestsTable from "../ManageRequests/table/FuelRequestsTable"
+import {APPROVED, DONE, PENDING, REQUEST} from "../../utility/constants"
 
 const Dashboard = () => {
     const [goodOpen, setGoodOpen] = useState(false)
     const [warningOpen, setWarningOpen] = useState(false)
     const [criticalOpen, setCriticalOpen] = useState(false)
+
+    const [request, setRequest] = useState([])
+
+    // eslint-disable-next-line no-unused-vars
+    const categorizeDeliveries = (status) => {
+
+        return request.filter(e => {
+            return e.status === status
+        })
+    }
+
+    const fetchRequests = async () => {
+
+        await axios.get('/fuel-request').then(res => {
+            console.log(res?.data)
+            setRequest(res?.data)
+        })
+    }
+
+    useEffect(() => {
+        fetchRequests()
+    }, [])
 
     return <div>
         <h1 className='f-Staatliches mb-2'>Inventory Section</h1>
@@ -192,7 +217,7 @@ const Dashboard = () => {
                 <h3 className='m-0 p-0 f-Staatliches'>STOCK LEVEL: GOOD</h3>
             </ModalHeader>
             <ModalBody>
-                {/*<InventorManagementTable stockItems={goodItems}/>*/}
+                <FuelRequestsTable requests={categorizeDeliveries(REQUEST)}/>
             </ModalBody>
         </Modal>
         {/*---------------------*/}
@@ -205,10 +230,10 @@ const Dashboard = () => {
         <Modal size="xl"
                className='modal-dialog-centered' isOpen={warningOpen} toggle={() => setWarningOpen(!warningOpen)} backdrop={3}>
             <ModalHeader toggle={() => setWarningOpen(!warningOpen)}>
-                <h3 className='m-0 p-0 f-Staatliches'>STOCK LEVEL: WARNING</h3>
+                <h3 className='m-0 p-0 f-Staatliches'>STOCK LEVEL: PENDING</h3>
             </ModalHeader>
             <ModalBody>
-                {/*<InventorManagementTable stockItems={warningItems}/>*/}
+                <FuelRequestsTable requests={categorizeDeliveries(PENDING)}/>
             </ModalBody>
         </Modal>
         {/*---------------------*/}
@@ -221,10 +246,10 @@ const Dashboard = () => {
         <Modal size="xl"
                className='modal-dialog-centered' isOpen={criticalOpen} toggle={() => setCriticalOpen(!criticalOpen)} backdrop={3}>
             <ModalHeader toggle={() => setCriticalOpen(!criticalOpen)}>
-                <h3 className='m-0 p-0 f-Staatliches'>STOCK LEVEL: CRITICAL</h3>
+                <h3 className='m-0 p-0 f-Staatliches'>STOCK LEVEL: DONE</h3>
             </ModalHeader>
             <ModalBody>
-                {/*<InventorManagementTable stockItems={goodItems}/>*/}
+                <FuelRequestsTable requests={categorizeDeliveries(DONE)}/>
             </ModalBody>
         </Modal>
         {/*---------------------*/}

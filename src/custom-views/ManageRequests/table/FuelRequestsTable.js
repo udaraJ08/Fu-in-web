@@ -1,4 +1,4 @@
-import {forwardRef, Fragment, useEffect, useState} from 'react'
+import {forwardRef, Fragment, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -7,8 +7,6 @@ import {
     Row
 } from 'reactstrap'
 import {fuelRequestsTableHandler} from "./tableHandler"
-import {EMPLOYEE_MOCK_DB, FUEL_REQUESTS_DB} from "../../../DB/DB"
-import axios from "../../../axios/axios"
 import moment from "moment"
 
 const BootstrapCheckbox = forwardRef((props, ref) => (
@@ -21,12 +19,11 @@ const onChangeHandle = (userdata) => {
     console.log(userdata)
 }
 
-const FuelRequestsTable = () => {
+const FuelRequestsTable = ({requests}) => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
     const [goodOpen, setGoodOpen] = useState(false)
-    const [requests, setRequests] = useState([])
     // eslint-disable-next-line no-unused-vars
     const [selectedRequest, setSelectedRequest] = useState()
 
@@ -39,17 +36,6 @@ const FuelRequestsTable = () => {
         setGoodOpen(!goodOpen)
         setSelectedRequest(e)
     }
-
-    const fetchRequests = async () => {
-
-        return axios.get("/fuel-request").then(res => {
-            setRequests(res.data)
-        })
-    }
-
-    useEffect(() => {
-        fetchRequests()
-    }, [])
 
     // ** Custom Pagination
     const CustomPagination = () => (

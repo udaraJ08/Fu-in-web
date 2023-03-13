@@ -19,12 +19,28 @@ export const fuelRequestsTableHandler = () => {
                 return moment(row.request_date_time).format('DD/mm/YYYY')
             }
         },
+        // {
+        //     name: 'CUSTOMER',
+        //     sortable: true,
+        //     minWidth: '250px',
+        //     selector: row => {
+        //         return row?.customer
+        //     }
+        // },
         {
-            name: 'CUSTOMER',
+            name: 'STATION',
             sortable: true,
             minWidth: '250px',
             selector: row => {
-                return row?.customer
+                return row?.station?.name
+            }
+        },
+        {
+            name: 'VEHICLE NUMBER',
+            sortable: true,
+            minWidth: '250px',
+            selector: row => {
+                return row?.vehicle?.register_number
             }
         },
         {
