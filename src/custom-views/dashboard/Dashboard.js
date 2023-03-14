@@ -5,14 +5,19 @@ import {useEffect, useState} from "react"
 import IncomeReportChart from "../../custom-components/IncomerReportView/IncomeReportChart"
 import axios from "../../axios/axios"
 import FuelRequestsTable from "../ManageRequests/table/FuelRequestsTable"
-import {APPROVED, DONE, PENDING, REQUEST} from "../../utility/constants"
+import {APPROVED, COMPLETED, DONE, PENDING, REQUEST} from "../../utility/constants"
+import * as xlsx from "xlsx"
+import {fireAlertError} from "../../utility/customUtils"
 
 const Dashboard = () => {
     const [goodOpen, setGoodOpen] = useState(false)
     const [warningOpen, setWarningOpen] = useState(false)
     const [criticalOpen, setCriticalOpen] = useState(false)
 
+    const [paymentTotal, setPaymentTotal] = useState(0)
+
     const [request, setRequest] = useState([])
+    const [payment, setPayment] = useState([])
 
     // eslint-disable-next-line no-unused-vars
     const categorizeDeliveries = (status) => {
@@ -25,13 +30,68 @@ const Dashboard = () => {
     const fetchRequests = async () => {
 
         await axios.get('/fuel-request').then(res => {
-            console.log(res?.data)
             setRequest(res?.data)
         })
     }
 
+    const fetchPayment = async () => {
+
+        await axios.get('/payment').then(res => {
+            setPayment(res?.data)
+        })
+    }
+
+    const generateReport = (fileName, data) => {
+        if (data.length === 0) {
+            fireAlertError("No Data !", "No data to create a report")
+            return
+        }
+        const workbook = xlsx.utils.book_new()
+        const ws = xlsx.utils.json_to_sheet(data)
+        xlsx.utils.book_append_sheet(workbook, ws, "Results")
+        xlsx.writeFile(workbook, `${fileName}.xlsx`, {type: 'file'})
+    }
+
+    const getPaymentMovementChart = () => {
+        return [
+            {
+                name: 'january',
+                total: 0
+            },
+            {
+                name: 'february',
+                total: 0
+            },
+            {
+                name: 'march',
+                total: paymentTotal
+            },
+            {
+                name: 'april',
+                total: 0
+            },
+            {
+                name: 'may',
+                total: 0
+            },
+            {
+                name: 'june',
+                total: 0
+            }
+        ]
+    }
+
+    useEffect(() => {
+        let total = 0
+        payment.forEach((e) => {
+            total += e.amount
+        })
+        setPaymentTotal(total)
+    }, [payment])
+
     useEffect(() => {
         fetchRequests()
+        fetchPayment()
     }, [])
 
     return <div>
@@ -129,15 +189,19 @@ const Dashboard = () => {
                 </Card>
             </Col>
             <Col lg={3}>
-                <Card className='btn btn-gradient-success'>
+                <Card
+                    onClick={() => generateReport("Reuqested Requests", categorizeDeliveries(REQUEST))}
+                    className='btn btn-gradient-success'>
                     <CardBody className='d-center align-items-baseline'>
-                        <p className='text-medium m-0 p-0'>Completed Request Report</p>
+                        <p className='text-medium m-0 p-0'>Requested requests Report</p>
                     </CardBody>
                 </Card>
             </Col>
 
             <Col lg={3}>
-                <Card className='btn btn-gradient-warning'>
+                <Card
+                    onClick={() => generateReport("Pending Requests", categorizeDeliveries(PENDING))}
+                    className='btn btn-gradient-warning'>
                     <CardBody className='d-center align-items-baseline'>
                         <p className='text-medium m-0 p-0'>Pending Request Report</p>
                     </CardBody>
@@ -145,9 +209,11 @@ const Dashboard = () => {
             </Col>
 
             <Col lg={3}>
-                <Card className='btn btn-gradient-danger'>
+                <Card
+                    onClick={() => generateReport("Done Requests", categorizeDeliveries(DONE))}
+                    className='btn btn-gradient-danger'>
                     <CardBody className='d-center align-items-baseline'>
-                        <p className='text-medium m-0 p-0'>Cancelled Request Report</p>
+                        <p className='text-medium m-0 p-0'>Done request Report</p>
                     </CardBody>
                 </Card>
             </Col>
@@ -165,7 +231,7 @@ const Dashboard = () => {
                         <div>
                             <b style={{
                                 fontSize: 25
-                            }} className='text-success'>{10000}/=</b>
+                            }} className='text-success'>{paymentTotal}/=</b>
                         </div>
                     </CardBody>
                     <CardFooter className='d-center text-grey'>
@@ -182,7 +248,7 @@ const Dashboard = () => {
                         <div>
                             <b style={{
                                 fontSize: 25
-                            }} className='text-primary'>{15}</b>
+                            }} className='text-primary'>{payment.length}</b>
                         </div>
                     </CardBody>
                     <CardFooter className='d-center text-grey'>
@@ -190,13 +256,17 @@ const Dashboard = () => {
                     </CardFooter>
                 </Card>
 
-                <Card className='btn btn-gradient-primary'>
+                <Card
+                    onClick={() => generateReport("Income report", payment)}
+                    className='btn btn-gradient-primary'>
                     <CardBody className='d-center align-items-baseline'>
                         <p className='text-medium m-0 p-0'>Generate Income Report</p>
                     </CardBody>
                 </Card>
 
-                <Card className='btn btn-gradient-success'>
+                <Card
+                    onClick={() => generateReport("Income movement", getPaymentMovementChart())}
+                    className='btn btn-gradient-success'>
                     <CardBody className='d-center align-items-baseline'>
                         <p className='text-medium m-0 p-0'>Generate income movement</p>
                     </CardBody>
@@ -204,7 +274,7 @@ const Dashboard = () => {
 
             </Col>
             <Col lg={9}>
-                <IncomeReportChart/>
+                <IncomeReportChart data={getPaymentMovementChart()}/>
             </Col>
         </Row>
 

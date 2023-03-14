@@ -2,12 +2,12 @@ import {Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis} from "r
 import {Card, CardBody} from "reactstrap"
 import {INCOME_CHART} from "../../DB/DB"
 
-const IncomeReportChart = () => {
+const IncomeReportChart = ({data}) => {
     return <div>
         <Card style={{height: '86vh'}}>
             <CardBody>
                 <ResponsiveContainer>
-                    <BarChart data={INCOME_CHART}>
+                    <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <XAxis dataKey="name"/>
                         <YAxis/>
