@@ -3,6 +3,7 @@ import StationsManagementTable from "./table/StationsManagementTable"
 import {useEffect, useState} from "react"
 import axios from "../../axios/axios"
 import {fireAlertError, fireAlertSuccess} from "../../utility/customUtils"
+import * as xlsx from "xlsx"
 
 const ManageStationsView = () => {
 
@@ -19,6 +20,17 @@ const ManageStationsView = () => {
         return axios.get("/station").then(res => {
             setStations(res.data)
         })
+    }
+
+    const generateReport = (fileName, data) => {
+        if (data.length === 0) {
+            fireAlertError("No Data !", "No data to create a report")
+            return
+        }
+        const workbook = xlsx.utils.book_new()
+        const ws = xlsx.utils.json_to_sheet(data)
+        xlsx.utils.book_append_sheet(workbook, ws, "Results")
+        xlsx.writeFile(workbook, `${fileName}.xlsx`, {type: 'file'})
     }
 
     useEffect(() => {
@@ -46,6 +58,11 @@ const ManageStationsView = () => {
 
     return <div>
         <h1 className='mb-3'>Manage Stations</h1>
+        <div className='d-flex justify-content-end mb-2'>
+            <button
+                onClick={() => generateReport("station-report", stations)}
+                className='btn btn-success'>Station Report</button>
+        </div>
         <Card className='mb-3 p-2'>
             <Row>
                 <Col lg={3}>

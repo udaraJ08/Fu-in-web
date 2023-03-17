@@ -2,8 +2,9 @@ import EmployeeManagementTable from "./table/EmployeeManagementTable"
 import {Card, Col, Form, Input, Label, Row} from "reactstrap"
 import {useEffect, useState} from "react"
 import axios from "../../axios/axios"
-import {dropdownPopulate, fireAlertSuccess} from "../../utility/customUtils"
+import {dropdownPopulate, fireAlertError, fireAlertSuccess} from "../../utility/customUtils"
 import Select from "react-select"
+import * as xlsx from "xlsx"
 
 const ManageEmployeeView = () => {
 
@@ -51,13 +52,27 @@ const ManageEmployeeView = () => {
         })
     }
 
+    const generateReport = (fileName, data) => {
+        if (data.length === 0) {
+            fireAlertError("No Data !", "No data to create a report")
+            return
+        }
+        const workbook = xlsx.utils.book_new()
+        const ws = xlsx.utils.json_to_sheet(data)
+        xlsx.utils.book_append_sheet(workbook, ws, "Results")
+        xlsx.writeFile(workbook, `${fileName}.xlsx`, {type: 'file'})
+    }
+
     useEffect(() => {
         fetchStations()
         fetchEmployees()
     }, [])
 
     return <div>
-        <h1 className='mb-3'>Manage Employee</h1>
+        <div className='d-flex justify-content-between align-items-center'>
+            <h1 className='mb-3'>Manage Employee</h1>
+            <button className='btn btn-primary' onClick={() => generateReport("employee-report", employees)}>Employee Report</button>
+        </div>
 
         <Card className="p-2">
             <Form>

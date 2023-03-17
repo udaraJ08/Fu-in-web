@@ -1,4 +1,4 @@
-import {forwardRef, Fragment, useEffect, useState} from 'react'
+import {Fragment, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -7,46 +7,20 @@ import {
     Row
 } from 'reactstrap'
 import {customerTableHandler} from "./tableHandler"
-import {CUSTOMER_MOCK_DB} from "../../../DB/DB"
-import axios from "../../../axios/axios"
-
-const BootstrapCheckbox = forwardRef((props, ref) => (
-    <div className='form-check'>
-        <Input type='checkbox' ref={ref} {...props} />
-    </div>
-))
 
 const onChangeHandle = (userdata) => {
     console.log(userdata)
 }
 
-// NETWORK CALLINGS
-// const fetchCustomerData = async () => {
-//
-//
-//     await ax
-// }
-const CustomerManagementTable = () => {
+const CustomerManagementTable = ({customers}) => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
-    const [customers, setCustomers] = useState([])
 
     // ** Function to handle Pagination
     const handlePagination = page => {
         setCurrentPage(page.selected)
     }
-
-    const fetchCustomers = async () => {
-
-        return axios.get("/customer").then(res => {
-            setCustomers(res.data)
-        })
-    }
-
-    useEffect(() => {
-        fetchCustomers()
-    }, [])
 
     // ** Custom Pagination
     const CustomPagination = () => (

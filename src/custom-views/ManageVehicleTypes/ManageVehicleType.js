@@ -3,7 +3,8 @@ import VehicleTypeManagementTable from "./table/VehicleTypeManagementTable"
 import Select from "react-select"
 import axios from "../../axios/axios"
 import {useEffect, useState} from "react"
-import {dropdownPopulate} from "../../utility/customUtils"
+import {dropdownPopulate, fireAlertError} from "../../utility/customUtils"
+import * as xlsx from "xlsx"
 
 const ManageVehicleType = () => {
 
@@ -16,12 +17,26 @@ const ManageVehicleType = () => {
         })
     }
 
+    const generateReport = (fileName, data) => {
+        if (data.length === 0) {
+            fireAlertError("No Data !", "No data to create a report")
+            return
+        }
+        const workbook = xlsx.utils.book_new()
+        const ws = xlsx.utils.json_to_sheet(data)
+        xlsx.utils.book_append_sheet(workbook, ws, "Results")
+        xlsx.writeFile(workbook, `${fileName}.xlsx`, {type: 'file'})
+    }
+
     useEffect(() => {
         fetchVehicles()
     }, [])
 
     return <div>
-        <h1 className='mb-3'>Manage Vehicle quotas</h1>
+        <div className='d-flex align-items-center justify-content-between'>
+            <h1 className='mb-3'>Manage Vehicle quotas</h1>
+            <button className='btn btn-primary' onClick={() => generateReport("vehicle-types-report", vehicleType)}>Vehicle Report</button>
+        </div>
         <Card className='mb-3 p-2'>
             <Row>
 

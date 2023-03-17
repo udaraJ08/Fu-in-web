@@ -4,6 +4,7 @@ import Select from "react-select"
 import {useEffect, useState} from "react"
 import axios from "../../axios/axios"
 import {dropdownPopulate, fireAlertCustom, fireAlertError} from "../../utility/customUtils"
+import * as xlsx from "xlsx"
 
 const DeliveryView = () => {
 
@@ -55,13 +56,29 @@ const DeliveryView = () => {
         })
     }
 
+    const generateReport = (fileName, data) => {
+        if (data.length === 0) {
+            fireAlertError("No Data !", "No data to create a report")
+            return
+        }
+        const workbook = xlsx.utils.book_new()
+        const ws = xlsx.utils.json_to_sheet(data)
+        xlsx.utils.book_append_sheet(workbook, ws, "Results")
+        xlsx.writeFile(workbook, `${fileName}.xlsx`, {type: 'file'})
+    }
+
     useEffect(() => {
         fetchStations()
         fetchDelivery()
     }, [])
 
     return <div>
-        <h1 className='mb-3'>Manage Delivery</h1>
+        <div className='d-flex justify-content-between align-items-center'>
+            <h1 className='mb-3'>Manage Delivery</h1>
+            <button
+                onClick={() => generateReport("delivery-report", delivery)}
+                className='btn btn-success'>Delivery Report</button>
+        </div>
         <Card className='mb-3 p-2'>
             <Row>
                 <Col lg={3}>

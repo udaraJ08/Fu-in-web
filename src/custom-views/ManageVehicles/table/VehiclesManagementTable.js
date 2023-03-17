@@ -1,4 +1,4 @@
-import {forwardRef, Fragment, useEffect, useState} from 'react'
+import {Fragment, useState} from 'react'
 import DataTable from 'react-data-table-component'
 import {ChevronDown} from 'react-feather'
 import ReactPaginate from 'react-paginate'
@@ -7,39 +7,20 @@ import {
     Row
 } from 'reactstrap'
 import {vehiclesTableHandler} from "./tableHandler"
-import axios from "../../../axios/axios"
-
-const BootstrapCheckbox = forwardRef((props, ref) => (
-    <div className='form-check'>
-        <Input type='checkbox' ref={ref} {...props} />
-    </div>
-))
 
 const onChangeHandle = (userdata) => {
     console.log(userdata)
 }
 
-const VehiclesManagementTable = () => {
+const VehiclesManagementTable = ({vehicles}) => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
-    const [vehicles, setVehicles] = useState([])
 
     // ** Function to handle Pagination
     const handlePagination = page => {
         setCurrentPage(page.selected)
     }
-
-    const fetchVehicles = async () => {
-
-        await axios.get("/vehicle").then(res => {
-            setVehicles(res.data)
-        })
-    }
-
-    useEffect(() => {
-        fetchVehicles()
-    }, [])
 
     // ** Custom Pagination
     const CustomPagination = () => (
