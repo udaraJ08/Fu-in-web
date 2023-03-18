@@ -5,7 +5,7 @@ import {useEffect, useState} from "react"
 import IncomeReportChart from "../../custom-components/IncomerReportView/IncomeReportChart"
 import axios from "../../axios/axios"
 import FuelRequestsTable from "../ManageRequests/table/FuelRequestsTable"
-import {APPROVED, COMPLETED, DONE, PENDING, REQUEST} from "../../utility/constants"
+import {DONE, PENDING, REQUEST} from "../../utility/constants"
 import * as xlsx from "xlsx"
 import {fireAlertError} from "../../utility/customUtils"
 
@@ -55,28 +55,25 @@ const Dashboard = () => {
     const getPaymentMovementChart = () => {
         return [
             {
+                name: 'november',
+                total: 2500
+            },
+            {
+                name: 'december',
+                total: 3000
+            },
+
+            {
                 name: 'january',
-                total: 0
+                total: 1200
             },
             {
                 name: 'february',
-                total: 0
+                total: 1800
             },
             {
                 name: 'march',
                 total: paymentTotal
-            },
-            {
-                name: 'april',
-                total: 0
-            },
-            {
-                name: 'may',
-                total: 0
-            },
-            {
-                name: 'june',
-                total: 0
             }
         ]
     }

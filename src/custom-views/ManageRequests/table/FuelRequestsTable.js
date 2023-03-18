@@ -8,6 +8,9 @@ import {
 } from 'reactstrap'
 import {fuelRequestsTableHandler} from "./tableHandler"
 import moment from "moment"
+import axios from "../../../axios/axios"
+import {fireAlertSuccess} from "../../../utility/customUtils"
+import {REQUEST} from "../../../utility/constants"
 
 const BootstrapCheckbox = forwardRef((props, ref) => (
     <div className='form-check'>
@@ -19,7 +22,7 @@ const onChangeHandle = (userdata) => {
     console.log(userdata)
 }
 
-const FuelRequestsTable = ({requests}) => {
+const FuelRequestsTable = ({requests, fetchRequest}) => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [searchValue] = useState('')
@@ -35,6 +38,16 @@ const FuelRequestsTable = ({requests}) => {
     const onRowClicked = (e) => {
         setGoodOpen(!goodOpen)
         setSelectedRequest(e)
+    }
+
+    const requestHandle = async (id, IsFuelRequest) => {
+
+        await axios.patch(`/fuel-request/changeFuelRequest/${id}`, {
+            IsFuelRequest
+        }).then(() => {
+            fetchRequest()
+            fireAlertSuccess("Request accept", "Request accepted !")
+        })
     }
 
     // ** Custom Pagination
@@ -89,26 +102,32 @@ const FuelRequestsTable = ({requests}) => {
                 </ModalHeader>
                 <ModalBody className='pt-2 pb-3'>
                     <div>
-                        <h4>Station: Moratuwa</h4>
+                        <h4>Station: {selectedRequest?.station?.name}</h4>
                     </div>
                     <div className='mt-1'>
-                        <h4>Customer: Gathsara Umesh</h4>
+                        <h4>Van: {selectedRequest?.vehicle?.register_number}</h4>
                     </div>
-                    <div className='mt-1'>
-                        <h4>Fuel Type: Petrol</h4>
-                    </div>
+                    {/*<div className='mt-1'>*/}
+                    {/*    <h4>Fuel Type: Petrol</h4>*/}
+                    {/*</div>*/}
                     <div className='mt-1'>
                         <h4>Request Date: {moment(selectedRequest?.request_date_time).format("YYYY/MM/DD")}</h4>
                     </div>
 
-                    <div className='d-flex justify-content-between mt-3'>
-                        <div>
-                            <button className='btn btn-gradient-warning'>CHECK VALIDITY</button>
-                        </div>
-                        <div className='d-flex gap-1'>
-                            <button className='btn btn-gradient-primary'>APPROVE</button>
-                            <button className='btn btn-gradient-danger'>REJECT</button>
-                        </div>
+                    <div className='d-flex justify-content-end mt-3'>
+                        {/*<div>*/}
+                        {/*    <button className='btn btn-gradient-warning'>CHECK VALIDITY</button>*/}
+                        {/*</div>*/}
+                        {
+                            selectedRequest?.status === REQUEST && <div className='d-flex gap-1'>
+                                <button
+                                    onClick={() => requestHandle(selectedRequest?.request_id, true)}
+                                    className='btn btn-gradient-primary'>APPROVE</button>
+                                <button
+                                    onClick={() => requestHandle(selectedRequest?.request_id, false)}
+                                    className='btn btn-gradient-danger'>REJECT</button>
+                            </div>
+                        }
                     </div>
 
                     <hr />

@@ -49,8 +49,8 @@ const DeliveryView = () => {
             quantity_of_liters: amount,
             date
         }).then(() => {
-            fetchStations()
-            fireAlertCustom("Success !", "Station register")
+            fetchDelivery()
+            fireAlertCustom("Success !", "Delivery done !")
         }).catch(err => {
             fireAlertError("An error occurred !", err.message)
         })

@@ -38,7 +38,7 @@ const ManageRequestsView = () => {
                 onClick={() => generateReport("requests-report", requests)}
                 className='btn btn-primary'>Requests report</button>
         </div>
-        <FuelRequestsTable requests={requests}/>
+        <FuelRequestsTable requests={requests} fetchRequest={fetchRequests}/>
     </div>
 }
 

@@ -44,9 +44,9 @@ const ManageEmployeeView = () => {
             dob,
             station,
             email,
-            mobile
-        }).then(res => {
-            setEmployees(dropdownPopulate(res.data, "name", "id"))
+            mobile,
+            password: email
+        }).then(() => {
             fetchEmployees()
             fireAlertSuccess("Success !", "Successfully employee registered")
         })

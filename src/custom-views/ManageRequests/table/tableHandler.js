@@ -1,6 +1,23 @@
-import moment from "moment"
+import {DONE, NOT_PAYED, PENDING, REQUEST} from "../../../utility/constants"
+import {Badge} from "reactstrap"
 
 export const fuelRequestsTableHandler = () => {
+
+    const handleBadges = (status) => {
+
+        switch (status) {
+            case REQUEST:
+                return <Badge color='light-warning'>Pending</Badge>
+            case NOT_PAYED:
+                return <Badge color='light-danger'>Cancelled</Badge>
+            case DONE:
+                return <Badge color='light-success'>Payed</Badge>
+            case PENDING:
+                return <Badge color='light-primary'>Approved</Badge>
+            default:
+                return <Badge color='light-success'>Payed</Badge>
+        }
+    }
 
     return  [
         {
@@ -16,7 +33,7 @@ export const fuelRequestsTableHandler = () => {
             sortable: true,
             minWidth: '100px',
             selector: row => {
-                return moment(row.request_date_time).format('DD/mm/YYYY')
+                return new Date(row.request_date_time).toLocaleDateString()
             }
         },
         // {
@@ -48,7 +65,7 @@ export const fuelRequestsTableHandler = () => {
             sortable: true,
             minWidth: '100px',
             selector: row => {
-                return row?.status
+                return handleBadges(row?.status)
             }
         }
     ]

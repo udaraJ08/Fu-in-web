@@ -109,7 +109,7 @@ const Login = () => {
             <div className='auth-inner m-0 d-flex overflow-hidden'>
                 <Col lg={8} className="d-center flex-column">
                     <img src={logo} width="20%" className="animate__animated animate__bounce"/>
-                    <h1 className="text-center mt-2 f-Staatliches font-large-2">Ride Higher with us </h1>
+                    <h1 className="text-center mt-2 f-Staatliches font-large-2">Ride Far with us </h1>
                 </Col>
                 <Card className="flex-grow-1 d-center h-100">
                     <Col
